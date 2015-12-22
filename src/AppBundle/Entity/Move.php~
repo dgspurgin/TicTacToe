@@ -1,0 +1,51 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="move")
+ */
+class Move
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Id
+     */
+    protected $moveId;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Game")
+     * @ORM\JoinColumn(name="gameId", referencedColumnName="gameId")
+     * @ORM\Column(type="integer")
+     */
+    protected $gameId;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Player")
+     * @ORM\JoinColumn(name="playerId", referencedColumnName="playerId")
+     * @ORM\Column(type="integer")
+     */
+    protected $playerId;
+
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $move;  // 1 = x, 2 = 0
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $row;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $column;
+
+}

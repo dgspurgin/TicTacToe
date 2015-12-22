@@ -1,0 +1,37 @@
+---------------------------------------------------------------------
+GAME LOGIC
+
+
+
+
+---------------------------------------------------------------------
+SUBMISSION FLOW:
+
+Check for gameID in session
+
+gameID = no
+	form+ "New Game" button
+		
+
+gameID = yes 
+	move submitted = yes
+		update game status
+		
+
+	gameCurrent = no
+		form+ "New Game" button
+		form+ GameBoardDone
+		form+ Winner
+	
+		
+	
+	gameCurrent = yes
+		form- "New Game" button
+		form+ GameBoardActive
+		form+ CurrentPlayer
+		
+	
+ 
+
+
+	
