@@ -83,16 +83,6 @@ class PlayController extends Controller
 
 
 	protected function newGame() {
-		//---------------------------------------------------------
-		// New game in memory
-		$session = $this->get('session');
-		$session->remove('currentGame');
-		$session->remove('moves');
-		$session->remove('pathsClaimed');
-		$session->remove('xPlayer');
-		$session->remove('oPlayer');
-		// count = #Rows + #Cols + 2 Diagonals
-		$session->set('pathsAliveCount', PlayController::$boardSize + PlayController::$boardSize + 2 );
 
 		//---------------------------------------------------------
 		// New game in db
@@ -289,17 +279,6 @@ class PlayController extends Controller
 			static::togglePlayer();
 		}
     }
-
-	protected function tooglePlayer() {
-		$session = $this->get('session');
-		$oldCurrentPlayer = $session->get('currentPlayer');
-		if ($oldCurrentPlayer == 1 ) {
-			$session->set('currentPlayer', 2);
-		}
-		else {
-			$session->set('currentPlayer', 1);
-		}
-	}
 
 
 }
