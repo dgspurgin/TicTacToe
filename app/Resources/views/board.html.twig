@@ -1,0 +1,24 @@
+<div>
+    <button id="btn1_1" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+    <button id="btn1_2" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+    <button id="btn1_3" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+</div>
+<div>
+    <button id="btn2_1" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+    <button id="btn2_2" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+    <button id="btn2_3" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+</div>
+<div>
+    <button id="btn3_1" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+    <button id="btn3_2" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+    <button id="btn3_3" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
+</div>
+
+
+<script type="text/javascript">
+$(".xo-button").on("click", function(event){
+    var buttonId = $(this).attr('id');
+    var buttonText = "X";
+    $('#' + buttonId).replaceWith("<span>" + buttonText + "</span>");
+});
+</script>
