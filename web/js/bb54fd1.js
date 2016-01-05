@@ -5,11 +5,17 @@ var winningPlayer = null;
 var currentPlayer = 1;
 var moves = [];
 var pathsClaimed = {};
+var pathsWon = {};
 
 var boardSize = 3;
-var pathsAliveCount = boardSize + boardSize + 2;  // #row paths + #col paths + 2 diagonals
+var pathsCount = boardSize + boardSize + 2;  // #row paths + #col paths + 2 diagonals
+var pathsAliveCount = pathsCount;
 var shouldStopWhenHomeless = true;
 var isGameOver = false;
+var isWinner = false;
+var isTie = false;
+
+
 
 init();
 
@@ -56,15 +62,21 @@ init();
     });
 
 function init() {
-    moves = [];
     pathsClaimed = {};
-
     pathsClaimed.rows = [];
     pathsClaimed.cols = [];
     pathsClaimed.diags = [];
-    pathsClaimed.diags[1] = [];
-    pathsClaimed.diags[2] = [];
+    pathsClaimed.diags[1] = null;
+    pathsClaimed.diags[2] = null;
 
+    pathsWon = {};
+    pathsWon.rows = null;
+    pathsWon.cols = null;
+    pathsWon.diags = [];
+    pathsWon.diags[1] = null;
+    pathsWon.diags[2] = null;
+
+    moves = [];
     var r = boardSize, c = boardSize;
     for (r=1; r<=boardSize; r++) {
         for (c=1; c<=boardSize; c++) {
@@ -82,6 +94,9 @@ function newGame() {
 }
 
 function makeMove(row, col) {
+    row = parseInt(row);
+    col = parseInt(col);
+
     // Add move to moves data stored in memory for current game
     moves[row][col] = currentPlayer;
     var isPossibleRowWin = false;
@@ -100,13 +115,13 @@ function makeMove(row, col) {
     // 0 = Both players have claim on path. Don't check in future.
 
     // Row ownership check
-    if (pathsClaimed['rows'][row] === 'undefined') {
+    if (! pathsClaimed['rows'][row]) {
         pathsClaimed['rows'][row] = currentPlayer;
     }
     else if (pathsClaimed['rows'][row] > 0) {
         if (pathsClaimed['rows'][row] != currentPlayer) {
             pathsAliveCount--;
-            pathsClaimed['rows'][row] = 0;
+            pathsClaimed['rows'][row] = -1;
         }
         else {
             isPossibleRowWin = true;
@@ -114,13 +129,13 @@ function makeMove(row, col) {
     }
 
     // Col ownership check
-    if (pathsClaimed['cols'][col] === 'undefined') {
+    if (! pathsClaimed['cols'][col]) {
         pathsClaimed['cols'][col] = currentPlayer;
     }
     else if (pathsClaimed['cols'][col] > 0) {
         if (pathsClaimed['cols'][col] != currentPlayer) {
             pathsAliveCount--;
-            pathsClaimed['cols'][col] = 0;
+            pathsClaimed['cols'][col] = -1;
         }
         else {
             isPossibleColWin = true;
@@ -129,14 +144,16 @@ function makeMove(row, col) {
 
     // Diagonal ownership check
     // If move in on TopLeft to BottomRight diagonal
-    if (row == col) {
-        if (pathsClaimed['diags'][1] === 'undefined') {
-            pathsClaimed['rows'][1] = currentPlayer;
+
+    if (row === col) {
+        if (! pathsClaimed['diags'][1]) {
+            alert('claim diag 1');
+            pathsClaimed['diags'][1] = currentPlayer;
         }
         else if (pathsClaimed['diags'][1] > 0) {
             if (pathsClaimed['diags'][1] != currentPlayer) {
                 pathsAliveCount--;
-                pathsClaimed['diags'][1] = 0;
+                pathsClaimed['diags'][1] = -1;
             }
             else {
                 isPossibleDiagonalWin[1] = true;
@@ -145,14 +162,15 @@ function makeMove(row, col) {
     }
 
     // If move is on TopRight to BottomLeft diagonal
-    if (row + col == (boardSize + 1) ) {
-        if (pathsClaimed['diags'][2] === 'undefined' ) {
-            pathsClaimed['rows'][2] = currentPlayer;
+    if (row + col === (boardSize + 1) ) {
+        if (! pathsClaimed['diags'][2]) {
+            alert('claim diag 2');
+            pathsClaimed['diags'][2] = currentPlayer;
         }
         else if (pathsClaimed['diags'][2] > 0)
             if (pathsClaimed['diags'][2] != currentPlayer) {
                 pathsAliveCount--;
-                pathsClaimed['diags'][2] = 0;
+                pathsClaimed['diags'][2] = -1;
             }
             else {
                 isPossibleDiagonalWin[2] = true;
@@ -160,11 +178,18 @@ function makeMove(row, col) {
 
     }
 
+    // left = row + col;
+    // right = boardSize + 1;
+    // alert(left + ' row+col = boarsize+1 ' +  right);
+
+    // alert(JSON.stringify(moves, null, 4));
+    alert(pathsAliveCount + '/' + pathsCount + ' still alive ');
+    alert(JSON.stringify(pathsClaimed, null, 4));
 
 
     //---------------------------------------------------------
     // Determine if current move has triggered win or tie
-    isWinner = null;
+    isWinner = false;
     isTie = false;
 
     // Check for tie: part 1
@@ -177,55 +202,68 @@ function makeMove(row, col) {
 
         // Row winner?
         if (isPossibleRowWin) {
-            for (c = 1; c <= boardSize; c++) {
-                if (moves[row][c] != currentPlayer) {
-                    break;
+
+            winnerCheck: {
+                for (c = 1; c <= boardSize; c++) {
+                    if (moves[row][c] != currentPlayer) {
+                        break winnerCheck;
+                    }
                 }
+                isWinner = true;
+                pathsWon['row'] = row;
             }
-            isWinner['row'] = true;
         }
 
         // Col winner?
         if (isPossibleColWin) {
-            for (r = 1; r <= boardSize; r++) {
-                if (moves[r][col] != currentPlayer) {
-                    break;
+            winnerCheck: {
+                for (r = 1; r <= boardSize; r++) {
+                    if (moves[r][col] != currentPlayer) {
+                        break winnerCheck;
+                    }
                 }
+                isWinner = true;
+                pathsWon['col'] = col;
             }
-            isWinner['col'] = true;
         }
 
         // Diagonal 1 winner?
         if (isPossibleDiagonalWin[1]) {
-            for (rowcol = 1; rowcol <= boardSize; rowcol++) {
-                if (moves[rowcol][rowcol] != currentPlayer) {
-                    break;
+            winnerCheck: {
+                for (rowcol = 1; rowcol <= boardSize; rowcol++) {
+                    if (moves[rowcol][rowcol] != currentPlayer) {
+                        break winnerCheck;
+                    }
                 }
+                isWinner = true;
+                pathsWon['diagonal'][1] = true;
             }
-            isWinner['diagonal'][1] = true;
         }
 
         // Diagonal 2 winner?
         if (isPossibleDiagonalWin[2]) {
-            for (r = 1; r <= boardSize; r++) {
-                c = boardSize + 1 - r;
-                if (moves[r][c] != currentPlayer) {
-                    break;
+            winnerCheck: {
+                for (r = 1; r <= boardSize; r++) {
+                    c = boardSize + 1 - r;
+                    if (moves[r][c] != currentPlayer) {
+                        break winnerCheck;
+                    }
                 }
+                isWinner = true;
+                pathsWon['diagonal'][2] = true;
             }
-            isWinner['diagonal'][2] = true;
         }
 
         // Check for tie: part 2
         // (must come after winner check)
-        if (isWinner === null && moves.length >= (boardSize * boardSize)) {
+        if (isWinner === false && moves.length >= (boardSize * boardSize)) {
             isTie = true;
         }
     }
 
     //---------------------------------------------------------
     // Did game just end?
-    if (isTie === true || isWinner !== null) {
+    if (isTie === true || isWinner === true) {
         isGameOver = true;
 
         if (isTie === true) {
