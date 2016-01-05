@@ -226,7 +226,7 @@ function makeMove(row, col) {
                     }
                 }
                 isWinner = true;
-                pathsWon['diagonal'][1] = true;
+                pathsWon['diags'][1] = true;
             }
         }
 
@@ -240,7 +240,7 @@ function makeMove(row, col) {
                     }
                 }
                 isWinner = true;
-                pathsWon['diagonal'][2] = true;
+                pathsWon['diags'][2] = true;
             }
         }
 

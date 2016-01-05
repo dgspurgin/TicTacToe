@@ -147,7 +147,6 @@ function makeMove(row, col) {
 
     if (row === col) {
         if (! pathsClaimed['diags'][1]) {
-            alert('claim diag 1');
             pathsClaimed['diags'][1] = currentPlayer;
         }
         else if (pathsClaimed['diags'][1] > 0) {
@@ -164,7 +163,6 @@ function makeMove(row, col) {
     // If move is on TopRight to BottomLeft diagonal
     if (row + col === (boardSize + 1) ) {
         if (! pathsClaimed['diags'][2]) {
-            alert('claim diag 2');
             pathsClaimed['diags'][2] = currentPlayer;
         }
         else if (pathsClaimed['diags'][2] > 0)
@@ -177,14 +175,6 @@ function makeMove(row, col) {
             }
 
     }
-
-    // left = row + col;
-    // right = boardSize + 1;
-    // alert(left + ' row+col = boarsize+1 ' +  right);
-
-    // alert(JSON.stringify(moves, null, 4));
-    alert(pathsAliveCount + '/' + pathsCount + ' still alive ');
-    alert(JSON.stringify(pathsClaimed, null, 4));
 
 
     //---------------------------------------------------------
@@ -236,7 +226,7 @@ function makeMove(row, col) {
                     }
                 }
                 isWinner = true;
-                pathsWon['diagonal'][1] = true;
+                pathsWon['diags'][1] = true;
             }
         }
 
@@ -250,7 +240,7 @@ function makeMove(row, col) {
                     }
                 }
                 isWinner = true;
-                pathsWon['diagonal'][2] = true;
+                pathsWon['diags'][2] = true;
             }
         }
 
