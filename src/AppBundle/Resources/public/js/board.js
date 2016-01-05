@@ -48,10 +48,14 @@ init();
             // update interface
             $("#btnNewGame").show();
             var message = "Tie Game";
+            var msgclass = "tie";
             if (winner) {
+
                 message = "Winner: Player " + playerMarks[currentPlayer];
+                msgclass = 'winner';
             }
-            $("#message").text(message);
+            $("#message").text(message).attr('class', msgclass);
+
 
         }
         else {

@@ -2,23 +2,46 @@
 
 {% block body %}
 <div id="message"></div>
+    <style>
+        #message {
+            height: 50px;
+            font-size:1.5em;
+            padding-bottom:20px;
+            padding-left:20px;
+        }
+        td {
+            width:50px;
+            height:50px;
+            text-align:center;
+        }
+        .winner {
+            background-color:#33ff33;
+        }
+        .tie {
+            background-color:#ffff33;
+        }
+    </style>
+
+<table>
+<tr>
+    <td><button id="btn1_1" row="1" col="1" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+    <td><button id="btn1_2" row="1" col="2" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+    <td><button id="btn1_3" row="1" col="3" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+</tr>
+<tr>
+    <td><button id="btn2_1" row="2" col="1" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+    <td><button id="btn2_2" row="2" col="2" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+    <td><button id="btn2_3" row="2" col="3" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+</tr>
+<tr>
+    <td><button id="btn3_1" row="3" col="1" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+    <td><button id="btn3_2" row="3" col="2" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+    <td><button id="btn3_3" row="3" col="3" class="xo-button">&nbsp;&nbsp;&nbsp;</button></td>
+</tr>
+</table>
+    
 <div>
-    <button id="btn1_1" row="1" col="1" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-    <button id="btn1_2" row="1" col="2" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-    <button id="btn1_3" row="1" col="3" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-</div>
-<div>
-    <button id="btn2_1" row="2" col="1" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-    <button id="btn2_2" row="2" col="2" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-    <button id="btn2_3" row="2" col="3" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-</div>
-<div>
-    <button id="btn3_1" row="3" col="1" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-    <button id="btn3_2" row="3" col="2" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-    <button id="btn3_3" row="3" col="3" class="xo-button">&nbsp;&nbsp;&nbsp;</button>
-</div>
-<div>
-    <button id="btnNewGame" >New Game</button>
+    <button id="btnNewGame" >New Game</button></td>
 </div>
 {% endblock %}
 
