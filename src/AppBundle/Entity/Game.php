@@ -42,28 +42,10 @@ class Game
      * @ORM\JoinColumn(name="winner", referencedColumnName="playerId")
      * @ORM\Column(type="integer", options={"default" = null})
      */
-    protected $winner;      // 0 = tie, 1 = player1, 2 = player2, null = no winner yet
 
-    protected $moves;
-
-    protected $currentPlayer;
+    protected $winner;      // 0 = tie, 1 = xPlayer, 2 = oPlayer, null = no winner yet
 
 
-    public function getCurrentPlayer() {
-        return $this->currentPlayer;
-    }
-    public function setCurrentPlayer($currentPlayer) {
-        $this->currentPlayer = $currentPlayer;
-        return $this;
-    }
-
-    public function getMoves() {
-        return $this->moves;
-    }
-    public function setMoves($moves){
-        $this->moves = $moves;
-        return $this;
-    }
 
 
     /**
