@@ -1,0 +1,22 @@
+{
+  "name": "TicTacToe",
+  "homepage": "https://github.com/dgspurgin/TicTacToe",
+  "authors": [
+    "Dan Spurgin <daniel.spurgin@advisorsexcel.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}
